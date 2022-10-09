@@ -70,6 +70,12 @@ describe "Maven Junit3 tests"
     Expect g:test#last_command == 'mvn -X -f pom.xml -DcustomProperty=5 test'
   end
 
+  it "runs a suite with maven debug option"
+    view src/test/java/org/vimtest/math/MathTest.java
+    TestSuite
+
+    Expect g:test#last_command == 'mvn test -Dmaven.surefire.debug'
+  end
 
 end
 

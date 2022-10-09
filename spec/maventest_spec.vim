@@ -56,6 +56,13 @@ describe "Maven Junit3 tests"
     Expect g:test#last_command == "mvn test -Dtest=org.vimtest.math.MathTest\\#testFailedAdd"
   end
 
+  it "runs nearest tests"
+    view +37 src/test/java/org/vimtest/math/MathTest.java
+    TestDebugNearest
+
+    Expect g:test#last_command == "mvn test -Dmaven.surefire.debug -Dtest=org.vimtest.math.MathTest\\#testFailedAdd"
+  end
+
   it "runs a suite"
     view src/test/java/org/vimtest/math/MathTest.java
     TestSuite
@@ -68,13 +75,6 @@ describe "Maven Junit3 tests"
     TestSuite -X -f pom.xml -DcustomProperty=5
 
     Expect g:test#last_command == 'mvn -X -f pom.xml -DcustomProperty=5 test'
-  end
-
-  it "runs a suite with maven debug option"
-    view src/test/java/org/vimtest/math/MathTest.java
-    TestSuite
-
-    Expect g:test#last_command == 'mvn test -Dmaven.surefire.debug'
   end
 
 end

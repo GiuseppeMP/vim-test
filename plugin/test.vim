@@ -40,7 +40,7 @@ let g:test#custom_transformations = get(g:, 'test#custom_transformations', {})
 let g:test#runner_commands = get(g:, 'test#runner_commands', [])
 
 command! -nargs=* -bar TestNearest call test#run('nearest', split(<q-args>))
-command! -nargs=* -bar TestDebugNearest call test#run('nearest', split(<q-args>))
+command! -nargs=* -bar TestDebugNearest call test#run('nearest-debug', split(<q-args>))
 command! -nargs=* -bar -complete=file
       \                TestFile    call test#run('file', split(<q-args>))
 command! -nargs=* -bar TestClass   call test#run('class', split(<q-args>))

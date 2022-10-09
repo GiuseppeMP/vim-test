@@ -1,6 +1,5 @@
 function! test#run(type, arguments) abort
   call s:before_run()
-
   let alternate_file = s:alternate_file()
 
   if test#test_file(expand('%'))

@@ -20,6 +20,13 @@ function! test#java#maventest#build_position(type, position) abort
   " ex:  mvn test -Dtest com.you.pkg.App$NestedClass#test_method
   " ex:  mvn test -Dtest com.you.pkg.App#test_method
   " ex:  mvn test -Dtest com.you.pkg.App\*           (catches nested test-classes)
+
+  if a:type =~ 'debug'
+      let l:debug_arg= ' -Dmaven.surefire.debug '
+    else
+      let l:debug_arg= ' '
+  endif
+  
   if a:type ==# 'nearest'
     let name = s:nearest_test(a:position)
     if !empty(name)
@@ -27,7 +34,13 @@ function! test#java#maventest#build_position(type, position) abort
     else
       return ['test -Dtest=' . package . '.' . filename . '\*'. module]
     endif
-
+  elseif a:type ==# 'nearest-debug'
+    let name = s:nearest_test(a:position)
+    if !empty(name)
+      return ['test' . l:debug_arg . '-Dtest=' . package . '.' . name. module]
+    else
+      return ['test' . l:debug_arg . '-Dtest='  . package . '.' . filename . '\*'. module]
+    endif
   " ex:  mvn test -Dtest com.you.pkg.App\*  (catches nested test-classes)
   elseif a:type ==# 'file'
     return ['test -Dtest=' . package . '.' . filename . '\*'. module]
